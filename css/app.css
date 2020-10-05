@@ -1,3 +1,7 @@
+:root {
+	--nav-text-color: #0A0A0A;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -59,7 +63,6 @@ pre {
 .nav-bar{
 	z-index: 2;
 	width: 100%;
-	background-color: #FAFAFA;
 	padding-left: 10%;
 	padding-right: 10%;
 	height: 80px;
@@ -78,11 +81,11 @@ pre {
 }
 
 .nav-logo svg g path:not(#x-letter){
-	stroke: #000 !important;
+	stroke: var(--nav-text-color) !important;
 }
 
 .nav-logo svg g path#x-letter{
-	fill: #000 !important;
+	fill: var(--nav-text-color) !important;
 }
 
 .nav-links{
@@ -103,7 +106,7 @@ pre {
 }
 
 .link-wraps div a{
-	color: #000;
+	color: var(--nav-text-color);
 	text-decoration: none;
 	cursor: pointer;
 }

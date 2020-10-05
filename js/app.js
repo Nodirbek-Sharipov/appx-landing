@@ -1,10 +1,10 @@
 document.querySelector('.body-container').style.overflow = 'hidden';
 
-const $ = (e)=>document.querySelector(e);
+const $ = e =>document.querySelector(e);
 const $$ = e => document.querySelectorAll(e);
 
 Node.prototype.on = Node.prototype.addEventListener;
-Node.prototype.no = Node.prototype.removeEventListener;
+window.on = window.addEventListener;
 
 Node.prototype.scroll = window.scroll
 
@@ -40,19 +40,29 @@ const ScrollToView = (node) => {
 	}
 }
 
+window.on('resize', ()=>{
+	ScrollToView($('.' + observable.scroll))
+})
 
 
 
 
 observable.registerListener(function(val) {
-	console.log(val);
+	if(val === 'home-page' || val === 'projects-page'){
+		setTimeout(()=>{
+			document.documentElement.style.setProperty("--nav-text-color", "#0A0A0A");
+		}, 300)
+	}
+
+	if(val === 'services-page' || val === 'contacts-page'){
+		setTimeout(()=>{
+			document.documentElement.style.setProperty("--nav-text-color", "#FAFAFA");
+		}, 300)
+	}
 });
 
 
-scroller.on('scroll', (event)=>{
-	// (scroller.scrollHeight*3)/4
-	// observable.scroll = scroller.scrollTop;
-})
+scroller.on('scroll', (event)=>{ })
 
 const LinkClickListener = (event)=>{
 	const to = event.target.attributes.to.value;
