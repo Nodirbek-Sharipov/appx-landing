@@ -48,13 +48,16 @@
 	<meta name="msapplication-TileImage" content="/icons/ms-icon-144x144.png"> -->
 	<meta name="keywords" content="appx, we make it happen, We deliver custom software with astonishing user experiences tailored for your business needs, front-end, back-end, fullstack, mobile development, iOS apps, android apps, UI design, UX design, custom software"/>
 	<link rel="stylesheet" href="css/app.css">
+	<!-- <link rel="stylesheet" href="css/fullpage.min.css"/> -->
+	<!-- <script src="js/fullpage.min.js"></script> -->
+	<!-- <script src="js/fullpage.extensions.min.js"></script> -->
+	<script src="js/app.js" defer></script>
 </head>
 <body>
 	<div class="main-container">
 		<div class="nav-container">
 			<div class="nav-bar">
-				<div class="nav-logo">
-					<?xml version="1.0" encoding="UTF-8"?>
+				<div class="nav-logo" to="home-page">
 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 40 40" style="transform: scale(.8);" version="1.1">
 						<g id="surface1">
 							<path id="x-letter" style=" stroke:none;fill-rule:evenodd;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 23.351562 23.371094 C 24.128906 22.578125 25.402344 22.570312 26.191406 23.351562 C 26.199219 23.355469 26.207031 23.363281 26.214844 23.371094 L 30.820312 28.046875 L 35.429688 23.371094 C 36.210938 22.578125 37.484375 22.570312 38.273438 23.351562 C 38.28125 23.355469 38.289062 23.363281 38.292969 23.371094 C 39.089844 24.175781 39.089844 25.472656 38.292969 26.277344 L 33.6875 30.953125 L 38.292969 35.628906 C 39.089844 36.433594 39.089844 37.726562 38.292969 38.535156 C 37.515625 39.324219 36.242188 39.335938 35.449219 38.554688 C 35.445312 38.546875 35.4375 38.542969 35.429688 38.535156 L 30.820312 33.859375 L 26.214844 38.535156 C 25.433594 39.324219 24.160156 39.335938 23.371094 38.554688 C 23.363281 38.546875 23.355469 38.542969 23.351562 38.535156 C 22.554688 37.726562 22.554688 36.433594 23.351562 35.628906 L 27.957031 30.953125 L 23.351562 26.277344 C 22.554688 25.472656 22.554688 24.175781 23.351562 23.371094 Z M 23.351562 23.371094 "/>
@@ -66,9 +69,9 @@
 				</div>
 				<div class="nav-links">
 					<div class="link-wraps">
-						<div><a href="#!">Services</a></div>
-						<div><a href="#!">Projects</a></div>
-						<div><a href="#!">Contacts</a></div>
+						<div><a to="services-page">Services</a></div>
+						<div><a to="projects-page">Projects</a></div>
+						<div><a to="contacts-page">Contacts</a></div>
 					</div>
 				</div>
 			</div>
@@ -93,7 +96,15 @@
 
 
 			<div class="services-page vh100">
+				services
+			</div>
 
+			<div class="projects-page vh100">
+				projects
+			</div>
+
+			<div class="contacts-page vh100">
+				contacts
 			</div>
 		</div>
 	</div>

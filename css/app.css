@@ -105,6 +105,7 @@ pre {
 .link-wraps div a{
 	color: #000;
 	text-decoration: none;
+	cursor: pointer;
 }
 
 .link-wraps div a.active::before,
@@ -133,11 +134,20 @@ pre {
 	overflow-y: scroll;
 }
 
-.home-page{
+.home-page, .services-page, .projects-page, .contacts-page{
 	padding-top: 80px;
 	width: 100%;
-	background-color: #fafafa;
 	display: flex;
+}
+
+.services-page, .contacts-page {
+	background-color: #0A0A0A;
+	color: #FAFAFA;
+}
+
+.home-page, .projects-page {
+	background-color: #FAFAFA;
+	color: #0A0A0A;
 }
 
 .inner-home{
@@ -188,13 +198,6 @@ pre {
 }
 
 
-
-.services-page{
-	padding-top: 80px;
-	width: 100%;
-	background-color: #0a0a0a;
-}
-
 .vh100 {
 	height: 100vh;
 }
@@ -237,7 +240,7 @@ pre {
 	.link-wraps div{
 		margin-left: 25px;
 	}
-	.home-page{
+	.home-page, .services-page, .projects-page, .contacts-page{
 		padding-top: 0 !important;
 		padding-right: 80px !important;
 	}
