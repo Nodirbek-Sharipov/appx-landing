@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>appx_landing</title>
+    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="send" transform="translate(1.000000, 1.000000)" stroke="#FAFAFA" stroke-width="2">
+            <line x1="20" y1="0" x2="9" y2="11" id="Path"></line>
+            <polygon id="Path" points="20 0 13 20 9 11 0 7"></polygon>
+        </g>
+    </g>
+</svg>

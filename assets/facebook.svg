@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="22px" viewBox="0 0 13 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>appx_landing</title>
+    <g id="Page-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="facebook" transform="translate(1.000000, 1.000000)" stroke="#FAFAFA" stroke-width="2">
+            <path d="M11,0 L8,0 C5.23857625,0 3,2.23857625 3,5 L3,8 L0,8 L0,12 L3,12 L3,20 L7,20 L7,12 L10,12 L11,8 L7,8 L7,5 C7,4.44771525 7.44771525,4 8,4 L11,4 L11,0 Z" id="Path"></path>
+        </g>
+    </g>
+</svg>
