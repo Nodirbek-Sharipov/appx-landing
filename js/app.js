@@ -1,5 +1,3 @@
-document.querySelector('.body-container').style.overflow = 'hidden';
-
 const $ = e =>document.querySelector(e);
 const $$ = e => document.querySelectorAll(e);
 
@@ -57,7 +55,7 @@ const ScrollToPrevious = ()=>{
 	canScroll = false;
 	setTimeout(() => {
 		canScroll = true
-	}, 500);
+	}, 1000);
 	switch(observable.scroll) {
 		case 'services-page':
 			observable.scroll = 'home-page';
@@ -74,7 +72,7 @@ const ScrollToNext = ()=>{
 	canScroll = false;
 	setTimeout(() => {
 		canScroll = true
-	}, 500);
+	}, 1000);
 	switch(observable.scroll) {
 		case 'home-page':
 			observable.scroll = 'services-page';

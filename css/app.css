@@ -11,6 +11,7 @@ body {
 	width: 100%;
 	height: 100vh;
 	min-width: 350px;
+	overscroll-behavior-y: contain;
 }
 
 h1, h2, h3, p, blockquote, pre {
@@ -134,7 +135,8 @@ pre {
 
 .body-container {
 	flex: 1;
-	overflow-y: scroll;
+	overflow: hidden;
+	overscroll-behavior-y: contain;
 }
 
 .home-page, .services-page, .projects-page, .contacts-page{
@@ -231,6 +233,8 @@ pre {
 		align-items: center;
 	}
 	.link-wraps{
+		border: 1px solid red;
+		padding-left: 80px;
 		transform: rotate(-90deg);
 		width: calc(100vh - 80px);
 		height: 80px;
