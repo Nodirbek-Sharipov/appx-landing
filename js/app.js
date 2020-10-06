@@ -29,8 +29,12 @@ observable = {
 	}
 }
 
-const ScrollToView = (node) => {
+let isManualScroll = true;
+let toUp; // scroll direction
+let canScroll = true; // allow scrolling or not
 
+const ScrollToView = (node) => {
+	isManualScroll = true
 	if (node.parentElement.scrollHeight > node.parentElement.clientHeight) {
 		scroller.scroll({
 			top: node.offsetTop + (node.clientHeight / 2) - (node.parentElement.clientHeight / 2),
@@ -40,14 +44,65 @@ const ScrollToView = (node) => {
 	}
 }
 
+const ScrollInstantly = (node) => {
+	if (node.parentElement.scrollHeight > node.parentElement.clientHeight) {
+		scroller.scroll({
+			top: node.offsetTop + (node.clientHeight / 2) - (node.parentElement.clientHeight / 2),
+			left: 0,
+		})
+	}
+}
+
+const ScrollToPrevious = ()=>{
+	canScroll = false;
+	setTimeout(() => {
+		canScroll = true
+	}, 500);
+	switch(observable.scroll) {
+		case 'services-page':
+			observable.scroll = 'home-page';
+			break;
+		case 'projects-page':
+			observable.scroll = 'services-page';
+			break;
+		case 'contacts-page':
+			observable.scroll = 'projects-page';
+			break;
+	}
+};
+const ScrollToNext = ()=>{
+	canScroll = false;
+	setTimeout(() => {
+		canScroll = true
+	}, 500);
+	switch(observable.scroll) {
+		case 'home-page':
+			observable.scroll = 'services-page';
+			break;
+		case 'services-page':
+			observable.scroll = 'projects-page';
+			break;
+		case 'projects-page':
+			observable.scroll = 'contacts-page';
+			break;
+	}
+};
+
 window.on('resize', ()=>{
 	ScrollToView($('.' + observable.scroll))
 })
 
 
-
+const SetActiveLink = to =>{
+	$$('.link-wraps div a').forEach(element => element.classList.remove('active'));
+	(to !== 'home-page') && $('.link-wraps div a[to="'+to+'"]').classList.add('active');
+}
 
 observable.registerListener(function(val) {
+
+	ScrollToView($('.' + val));
+	SetActiveLink(val);
+
 	if(val === 'home-page' || val === 'projects-page'){
 		setTimeout(()=>{
 			document.documentElement.style.setProperty("--nav-text-color", "#0A0A0A");
@@ -62,15 +117,45 @@ observable.registerListener(function(val) {
 });
 
 
-scroller.on('scroll', (event)=>{ })
+scroller.on('wheel', (event) => {
+	event.preventDefault();
+
+	const magnitude = 30; // how fast the page is scrolled
+	toUp = event.wheelDelta > 0
+	if(isManualScroll){
+		if(event.deltaY < -magnitude && canScroll) { // to top
+			ScrollToPrevious();
+		}
+
+		if(event.deltaY > magnitude && canScroll) { // to bottom
+			ScrollToNext();
+		}
+	}
+});
+
+let touchStartY, touchEndY;
+
+scroller.on('touchstart', (event)=>{
+	touchStartY = event.touches[0].clientY;
+})
+
+scroller.on('touchend', (event)=>{
+	touchEndY = event.changedTouches[0].clientY;
+
+	let difference = touchEndY - touchStartY
+
+	if(difference > 0 && Math.abs(difference) > 150){ // up
+		ScrollToPrevious();
+	}
+
+	if(difference < 0  && Math.abs(difference) > 150){ // down
+		ScrollToNext();
+	}
+})
 
 const LinkClickListener = (event)=>{
 	const to = event.target.attributes.to.value;
 	observable.scroll = to;
-	ScrollToView($('.' + to));
-
-	$$('.link-wraps div a').forEach(element => element.classList.remove('active'));
-	$('.link-wraps div a[to="'+to+'"]').classList.add('active')
 }
 
 $$('.link-wraps div a').forEach(element => {
@@ -80,16 +165,9 @@ $$('.link-wraps div a').forEach(element => {
 $('.nav-logo').on('click', ()=>{
 	const to = 'home-page';
 	observable.scroll = to;
-	ScrollToView($('.' + to));
-
-	$$('.link-wraps div a').forEach(element => element.classList.remove('active'));
 })
 
 $('.btn-explore').on('click', ()=>{
 	const to = 'services-page';
 	observable.scroll = to;
-	ScrollToView($('.' + to));
-
-	$$('.link-wraps div a').forEach(element => element.classList.remove('active'));
-	$('.link-wraps div a[to="'+to+'"]').classList.add('active')
 })
