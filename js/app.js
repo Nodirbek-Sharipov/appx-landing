@@ -144,11 +144,13 @@ scroller.on('touchend', (event)=>{
 
 	let difference = touchEndY - touchStartY
 
-	if(difference > 0 && Math.abs(difference) > 150){ // up
+	const magnitude = 80; // how fast the screen is swiped
+
+	if(difference > 0 && Math.abs(difference) > magnitude){ // up
 		ScrollToPrevious();
 	}
 
-	if(difference < 0  && Math.abs(difference) > 150){ // down
+	if(difference < 0  && Math.abs(difference) > magnitude){ // down
 		ScrollToNext();
 	}
 })
