@@ -72,6 +72,7 @@ pre {
 	flex-direction: row !important;
 }
 
+
 .nav-logo{
 	cursor: pointer;
 	width: 80px;
@@ -79,6 +80,16 @@ pre {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.nav-logo svg {
+	opacity: 0;
+
+	animation-name: FadeIn;
+	animation-delay: .5s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
 }
 
 .nav-logo svg g path:not(#x-letter){
@@ -94,7 +105,6 @@ pre {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	padding-right: 20px;
 	height: 80px;
 }
 
@@ -110,11 +120,18 @@ pre {
 	color: var(--nav-text-color);
 	text-decoration: none;
 	cursor: pointer;
+	opacity: 0;
+
+	animation-name: FadeIn;
+	animation-delay: 0.5s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
 }
 
 .link-wraps div a.active::before,
 .link-wraps div a:hover::before{
-	content: "—"; /* » */
+	content: "—";
 	position: absolute;
 	color: inherit;
 	font-weight: 800;
@@ -124,7 +141,7 @@ pre {
 
 
 .link-wraps div a::before {
-	content: "—"; /* » */
+	content: "—";
 	transition: 0.3s ease-in-out all;
 	position: absolute;
 	color: transparent;
@@ -168,7 +185,6 @@ pre {
 }
 
 .home-phrase{
-	/* flex: 1; */
 	max-width: 300px;
 	height: inherit;
 	display: flex;
@@ -177,8 +193,28 @@ pre {
 	justify-content: center;
 }
 
+.home-phrase h1 {
+	width: 250px;
+	opacity: 0;
+	margin-left: 100px;
+
+	animation-name: FadeInRight;
+	animation-delay: .5s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+}
+
 .home-phrase h3 {
-	max-width: 300px;
+	width: 250px;
+	opacity: 0;
+	margin-left: 100px;
+
+	animation-name: FadeInRight;
+	animation-delay: .6s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
 }
 
 .btn-explore{
@@ -192,14 +228,37 @@ pre {
 	font-size: 17px;
 	outline: none;
 	cursor: pointer;
+	opacity: 0;
+	margin-left: 100px;
+
+	animation-name: FadeInRight;
+	animation-delay: .7s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+
+	transition: 0.3s ease-in-out all;
+}
+
+.btn-explore:hover{
+	transform: scale(1.1);
 }
 
 .home-svg-wrap{
+	opacity: 0;
+	margin-left: 100px;
 	flex: 1;
 	background-image: url(../assets/pond-art.png);
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center;
+
+	animation-name: FadeInRight;
+	animation-delay: 1.5s;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+	animation-iteration-count: 1;
+
 }
 
 .vh100 {
@@ -223,6 +282,118 @@ pre {
 	flex: 1;
 	display: flex;
 	flex-direction: row;
+}
+
+.services-page-section{
+	flex: 1;
+	margin-right: 80px;
+	display: flex;
+	flex-direction: column;
+}
+
+.service-slider{
+	flex: 1;
+	display: flex;
+}
+
+.service-slider-wrap{
+	display: flex;
+	flex: 1;
+	flex-wrap: nowrap;
+	overflow-x: hidden;
+	overflow: hidden;
+	border-radius: 10px;
+}
+
+.service-slide-item {
+	height: inherit;
+	width: 100% !important;
+	flex: 0 0 auto;
+	display: flex;
+	flex-direction: row;
+}
+
+.double-section{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.double-section ul{
+	padding-left: 10px !important;
+
+}
+
+.double-section-2{
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+}
+
+.double-section-2 div{
+	flex: 1;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+}
+
+.icon-front-end {
+	background-image: url(../assets/web_dev_undraw.svg);
+}
+
+.icon-android{
+	background-image: url(../assets/undraw_android.svg);
+}
+
+.icon-ios{
+	background-image: url(../assets/undraw_ios.svg);
+}
+
+.icon-back-end {
+	background-image: url(../assets/web_server_undraw.svg);
+}
+
+.icon-ui{
+	background-image: url(../assets/ui_undraw.svg);
+}
+
+.icon-ux{
+	background-image: url(../assets/ux_undraw.svg);
+}
+
+.double-section div ul li{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #a8a8a8;
+}
+
+.double-section div{
+	padding-left: 10px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.service-slider-links{
+	height: 100px;
+}
+
+.slider-link-wrap{
+	height: 90px;
+	display: flex;
+	align-items: center;
+}
+
+.slider-link-wrap .active {
+	color: var(--nav-text-color);
+	border-bottom: 2px solid var(--nav-text-color);
+}
+
+.slider-link-item{
+	margin-left: 20px;
+	color: #a8a8a8;
+	border-bottom: 2px solid transparent;
+	cursor: pointer;
 }
 
 .page-section{
@@ -270,6 +441,12 @@ pre {
 	padding-left: 10px;
 }
 
+
+@media screen and (max-width: 450px){
+	.services-page-section{
+		width: 75%;
+	}
+}
 
 @media screen and (max-width: 600px) {
 	.main-container{
@@ -342,8 +519,47 @@ pre {
 	.home-phrase{
 		height: 300px;
 	}
+	.services-page-section{
+		margin-right: 0 !important;
+	}
 	.page-section div{
 		height: 7vh;
 	}
-
+	.service-slide-item {
+		flex-direction: column-reverse;
+	}
+	.double-section div{
+		padding-left: 10px;
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+	.double-section-2{
+		flex-direction: row;
+	}
+	.double-section-2 div{
+		/* background-size: 75% !important; */
+	}
 }
+
+/* final touches && transition animations */
+
+@keyframes FadeInRight {
+	from {
+		opacity: 0;
+		margin-left: 100px;
+	}
+	to {
+		opacity: 1;
+		margin-left: 0px;
+	}
+}
+
+@keyframes FadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+

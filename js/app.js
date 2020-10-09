@@ -7,9 +7,29 @@ window.on = window.addEventListener;
 Node.prototype.scroll = window.scroll
 
 let scroller = $('.body-container');
+let services_scroller = $('.service-slider-wrap');
 
-observable = {
+observable_main = {
 	aInternal: 'home-page',
+
+	aListener: function(val) {},
+
+	set scroll(val) {
+		this.aInternal = val;
+		this.aListener(val);
+	},
+
+	get scroll() {
+		return this.aInternal;
+	},
+
+	registerListener: function(listener) {
+		this.aListener = listener;
+	}
+}
+
+observable_services = {
+	aInternal: 'slide-item-web',
 
 	aListener: function(val) {},
 
@@ -30,11 +50,12 @@ observable = {
 let isManualScroll = true;
 let toUp; // scroll direction
 let canScroll = true; // allow scrolling or not
+let canScrollService = true;
 
 const ScrollToView = (node) => {
 	isManualScroll = true
 	if (node.parentElement.scrollHeight > node.parentElement.clientHeight) {
-		scroller.scroll({
+		node.parentElement.scroll({
 			top: node.offsetTop + (node.clientHeight / 2) - (node.parentElement.clientHeight / 2),
 			left: 0,
 			behavior: 'smooth'
@@ -42,29 +63,32 @@ const ScrollToView = (node) => {
 	}
 }
 
-const ScrollInstantly = (node) => {
-	if (node.parentElement.scrollHeight > node.parentElement.clientHeight) {
-		scroller.scroll({
-			top: node.offsetTop + (node.clientHeight / 2) - (node.parentElement.clientHeight / 2),
-			left: 0,
+const ScrollToViewHorizontally = (node) => {
+	// isManualScroll = true
+	// if (node.parentElement.scrollWidth > node.parentElement.scrollWidth) {
+		node.parentElement.scroll({
+			top: 0,
+			left: (node.offsetLeft - node.parentElement.offsetLeft) + (node.clientWidth / 2) - (node.parentElement.clientWidth / 2),
+			behavior: 'smooth'
 		})
-	}
+	// }
 }
+
 
 const ScrollToPrevious = ()=>{
 	canScroll = false;
 	setTimeout(() => {
 		canScroll = true
 	}, 1000);
-	switch(observable.scroll) {
+	switch(observable_main.scroll) {
 		case 'services-page':
-			observable.scroll = 'home-page';
+			observable_main.scroll = 'home-page';
 			break;
 		case 'projects-page':
-			observable.scroll = 'services-page';
+			observable_main.scroll = 'services-page';
 			break;
 		case 'contacts-page':
-			observable.scroll = 'projects-page';
+			observable_main.scroll = 'projects-page';
 			break;
 	}
 };
@@ -73,21 +97,57 @@ const ScrollToNext = ()=>{
 	setTimeout(() => {
 		canScroll = true
 	}, 1000);
-	switch(observable.scroll) {
+	switch(observable_main.scroll) {
 		case 'home-page':
-			observable.scroll = 'services-page';
+			observable_main.scroll = 'services-page';
 			break;
 		case 'services-page':
-			observable.scroll = 'projects-page';
+			observable_main.scroll = 'projects-page';
 			break;
 		case 'projects-page':
-			observable.scroll = 'contacts-page';
+			observable_main.scroll = 'contacts-page';
+			break;
+	}
+};
+
+const ScrollToPreviousService = ()=>{
+	canScrollService = false;
+	setTimeout(() => {
+		canScrollService = true
+	}, 1000);
+	switch(observable_services.scroll) {
+		case 'slide-item-web':
+			observable_services.scroll = 'slide-item-ui';
+			break;
+		case 'slide-item-mobile':
+			observable_services.scroll = 'slide-item-web';
+			break;
+		case 'slide-item-ui':
+			observable_services.scroll = 'slide-item-mobile';
+			break;
+	}
+};
+const ScrollToNextService = ()=>{
+	canScrollService = false;
+	setTimeout(() => {
+		canScrollService = true
+	}, 1000);
+	switch(observable_services.scroll) {
+		case 'slide-item-web':
+			observable_services.scroll = 'slide-item-mobile';
+			break;
+		case 'slide-item-mobile':
+			observable_services.scroll = 'slide-item-ui';
+			break;
+		case 'slide-item-ui':
+			observable_services.scroll = 'slide-item-web';
 			break;
 	}
 };
 
 window.on('resize', ()=>{
-	ScrollToView($('.' + observable.scroll))
+	ScrollToView($('.' + observable_main.scroll))
+	ScrollToViewHorizontally($('.' + observable_services.scroll))
 })
 
 
@@ -96,30 +156,38 @@ const SetActiveLink = to =>{
 	(to !== 'home-page') && $('.link-wraps div a[to="'+to+'"]').classList.add('active');
 }
 
-observable.registerListener(function(val) {
+const SetActiveServiceLink = to =>{
+	$$('.slider-link-wrap div').forEach(element => element.classList.remove('active'));
+	$('.slider-link-wrap div[to="'+to+'"]').classList.add('active');
+}
+
+observable_main.registerListener(function(val) {
 
 	ScrollToView($('.' + val));
 	SetActiveLink(val);
 
-	if(val === 'home-page' || val === 'projects-page'){
-		setTimeout(()=>{
+	setTimeout(()=>{
+		if(val === 'home-page' || val === 'projects-page'){
 			document.documentElement.style.setProperty("--nav-text-color", "#0A0A0A");
-		}, 300)
-	}
+		}
 
-	if(val === 'services-page' || val === 'contacts-page'){
-		setTimeout(()=>{
+		if(val === 'services-page' || val === 'contacts-page'){
 			document.documentElement.style.setProperty("--nav-text-color", "#FAFAFA");
-		}, 300)
-	}
+		}
+	}, 300)
 });
+
+observable_services.registerListener(function(val) {
+	ScrollToViewHorizontally($('.' + val))
+	SetActiveServiceLink(val)
+})
 
 
 scroller.on('wheel', (event) => {
 	event.preventDefault();
 
-	const magnitude = 30; // how fast the page is scrolled
-	toUp = event.wheelDelta > 0
+	const magnitude = 20; // how fast the page is scrolled
+	toUp = event.wheelDeltaY > 0
 	if(isManualScroll){
 		if(event.deltaY < -magnitude && canScroll) { // to top
 			ScrollToPrevious();
@@ -127,6 +195,23 @@ scroller.on('wheel', (event) => {
 
 		if(event.deltaY > magnitude && canScroll) { // to bottom
 			ScrollToNext();
+		}
+	}
+});
+
+services_scroller.on('wheel', (event) => {
+	event.preventDefault();
+
+	const magnitude = 20;
+	toBack = event.wheelDeltaX > 0
+
+	if(true){
+		if(event.deltaX < -magnitude && canScrollService) { // go back
+			ScrollToPreviousService();
+		}
+
+		if(event.deltaX > magnitude && canScrollService) { // go forwards
+			ScrollToNextService();
 		}
 	}
 });
@@ -153,21 +238,49 @@ scroller.on('touchend', (event)=>{
 	}
 })
 
-const LinkClickListener = (event)=>{
-	const to = event.target.attributes.to.value;
-	observable.scroll = to;
-}
+let touchStartXServices, touchEndXServices;
+
+services_scroller.on('touchstart', (event)=>{
+	touchStartXServices = event.touches[0].clientX;
+})
+
+services_scroller.on('touchend', (event)=>{
+	touchEndXServices = event.changedTouches[0].clientX;
+
+	let difference = touchEndXServices - touchStartXServices
+
+	const magnitude = 80; // how fast the screen is swiped
+
+	if(difference > 0 && Math.abs(difference) > magnitude){ // up
+		ScrollToPreviousService();
+	}
+
+	if(difference < 0  && Math.abs(difference) > magnitude){ // down
+		ScrollToNextService();
+	}
+})
+
+setInterval(()=>{
+	ScrollToNextService();
+}, 5e3)
+
 
 $$('.link-wraps div a').forEach(element => {
-	element.on('click', LinkClickListener)
+	element.on('click', (event)=>{
+		observable_main.scroll = event.target.attributes.to.value;
+	})
 });
 
 $('.nav-logo').on('click', ()=>{
-	const to = 'home-page';
-	observable.scroll = to;
+	observable_main.scroll = 'home-page';
 })
 
 $('.btn-explore').on('click', ()=>{
-	const to = 'services-page';
-	observable.scroll = to;
+	observable_main.scroll = 'services-page';
 })
+
+$$('.slider-link-item').forEach(element => {
+	element.on('click', (event)=>{
+		observable_services.scroll = event.target.attributes.to.value;
+	})
+});
