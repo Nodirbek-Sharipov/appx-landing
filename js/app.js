@@ -47,6 +47,25 @@ observable_services = {
 	}
 }
 
+observable_last_slided = {
+	aInternal: 0,
+
+	aListener: function(val) {},
+
+	set time(val) {
+		this.aInternal = val;
+		this.aListener(val);
+	},
+
+	get time() {
+		return this.aInternal;
+	},
+
+	registerListener: function(listener) {
+		this.aListener = listener;
+	}
+}
+
 let isManualScroll = true;
 let toUp; // scroll direction
 let canScroll = true; // allow scrolling or not
@@ -178,8 +197,15 @@ observable_main.registerListener(function(val) {
 });
 
 observable_services.registerListener(function(val) {
+	observable_last_slided.time = 0;
 	ScrollToViewHorizontally($('.' + val))
 	SetActiveServiceLink(val)
+})
+
+observable_last_slided.registerListener(function(val) {
+	if(val === 5){
+		ScrollToNextService();
+	}
 })
 
 
@@ -261,8 +287,8 @@ services_scroller.on('touchend', (event)=>{
 })
 
 setInterval(()=>{
-	ScrollToNextService();
-}, 5e3)
+	observable_last_slided.time = observable_last_slided.time + 1
+}, 1000)
 
 
 $$('.link-wraps div a').forEach(element => {
