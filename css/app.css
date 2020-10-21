@@ -535,6 +535,9 @@ pre {
 	.double-section-2{
 		flex-direction: row;
 	}
+	.double-section-2 div{
+		background-image: none;
+	}
 }
 
 /* final touches && transition animations */
