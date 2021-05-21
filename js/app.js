@@ -204,7 +204,8 @@ observable_services.registerListener(function(val) {
 
 observable_last_slided.registerListener(function(val) {
 	if(val === 5){
-		ScrollToNextService();
+		// disabled auto-scroll slide-show
+		// ScrollToNextService();
 	}
 })
 
